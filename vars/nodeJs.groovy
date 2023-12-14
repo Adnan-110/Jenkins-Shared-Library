@@ -14,7 +14,7 @@ def call(String component) {
                 steps {
                     script{
                         helloWorld.info(component)
-                        nodeJs.lintChecks(component)
+                        lintChecks(component)
                     }
                 }
             }

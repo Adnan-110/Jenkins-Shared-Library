@@ -20,9 +20,9 @@ def call(String component) {
                     script{
                         helloWorld.info(component)
                         lintChecks(component)
+                        // Below we are not passing any parameter to both methods/functions
                         // helloWorld.info()
                         // lintChecks()
-                        // Above we are not passing any parameter to both methods/functions
                     }
                 }
             }

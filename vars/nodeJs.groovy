@@ -22,6 +22,7 @@ def call(String component) {
                         lintChecks(component)
                         // helloWorld.info()
                         // lintChecks()
+                        // Above we are not passing any parameter to both methods/functions
                     }
                 }
             }

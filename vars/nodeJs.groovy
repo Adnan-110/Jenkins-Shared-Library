@@ -13,8 +13,8 @@ def call(String component) {
             stage('Lint Checks') {
                 steps {
                     script{
-                        helloWorld.info(component)
-                        nodeJs.lintChecks(component)
+                        helloWorld.info("component")
+                        nodeJs.lintChecks("component")
                     }
                 }
             }

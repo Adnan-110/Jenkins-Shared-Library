@@ -44,7 +44,7 @@ def call(String component) {
             }
             stage('Unit Testing') {
                 steps{
-                    echo "****** Starting Unit Testing for ${component} ******"
+                    echo "****** Unit Testing is Started for ${component} ******"
                     echo "****** Unit Testing is InProgress for ${component} ******"
                     echo "****** Unit Testing is Completed for ${component} ******"
                 }   

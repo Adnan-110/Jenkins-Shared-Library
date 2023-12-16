@@ -18,7 +18,7 @@ def sonarChecks(String component) {
     echo "****** Static Code Analysis is Completed for ${component} ******"
 
     }
-def call(String component) {
+def call(String component, def SONAR_URL) {
         pipeline{
             agent{
                 label 'ws'

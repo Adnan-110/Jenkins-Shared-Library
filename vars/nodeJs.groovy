@@ -14,7 +14,7 @@ def sonarChecks(String component) {
     sh """
     echo ****** Starting Static Code Analysis for ${component} ******
     sonar-scanner -Dsonar.host.url=http://172.31.39.131:9000 -Dsonar.sources=. -Dsonar.projectKey=${component} -Dsonar.login=admin -Dsonar.password=password
-    echo ****** Static Code Analysis is Completed ${component} ******
+    echo ****** Static Code Analysis is Completed for ${component} ******
     """
     }
 def call(String component) {

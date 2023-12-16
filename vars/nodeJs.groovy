@@ -35,6 +35,10 @@ def call(String component) {
             stage('Static Code Analysis') {
                 steps{
                     sh "echo ****** Starting Static Code Analysis ******"
+                    script{
+                        sonarChecks(component)
+                    }
+                    sh "echo ****** Static Code Analysis is Completed ******"
                 }   
             }
         }

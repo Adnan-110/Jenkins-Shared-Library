@@ -10,7 +10,7 @@ def lintChecks(String component) {
 // def call() {
 // Above we are not catching the parameter value
 
-def sonarChecks() {
+def sonarChecks(String component) {
     sh """
     sonar-scanner -Dsonar.host.url=http://172.31.39.131:9000 -Dsonar.sources=. -Dsonar.projectKey=${component} -Dsonar.login=admin -Dsonar.password=password"
     """

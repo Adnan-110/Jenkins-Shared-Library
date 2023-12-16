@@ -42,6 +42,12 @@ def call(String component) {
                     }
                 }   
             }
+            stage('Get the Sonar Analysis Result') {
+                steps{
+                    sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate?ref_type=heads > qualityGate.sh"
+                    sh "./qualityGate.sh admin password ${SONAR_URL} ${component}"
+                }   
+            }
             stage('Unit Testing') {
                 steps{
                     echo "****** Unit Testing is Started for ${component} ******"

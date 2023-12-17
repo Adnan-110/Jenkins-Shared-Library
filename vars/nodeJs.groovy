@@ -52,7 +52,6 @@ def call() {
                 parallel {
                     stage('Unit Testing') {
                         steps{
-                            sh "env"
                             echo "****** Unit Testing is Started for ${COMPONENT} ******"
                             // sh "npm test"
                             echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
@@ -94,7 +93,7 @@ def call() {
                 when { expression {env.TAG_NAME != null } }
                 steps{
                     echo "****** Uploading of Artifacts is Started for ${COMPONENT} ******" 
-                    sh "curl -v -u ${NEXUS_CRED_USR}:${NEXUS_CRED_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                    sh "curl -v -u ${NEXUS_CRED_USR}:${NEXUS_CRED_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.86.85:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                     echo "****** Uploading of Artifacts is Completed for ${COMPONENT} ******" 
                 }
             }

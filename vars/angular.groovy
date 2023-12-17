@@ -71,6 +71,20 @@ def call() {
                     }
                 }
             }
+            stage("Prepare Artifacts for ${COMPONENT}"){  //Runs only when u run this job from tag and from branches it should not run
+                steps{
+                    echo "****** Artifacts Preparation is Started for ${COMPONENT} ******" 
+                    echo "****** Artifacts Preparation is InProgress for ${COMPONENT} ******" 
+                    echo "****** Artifacts Preparation is Completed for ${COMPONENT} ******" 
+                }
+            }
+            stage("Uploading Artifacts for ${COMPONENT}"){
+                steps{
+                    echo "****** Uploading of Artifacts is Started for ${COMPONENT} ******" 
+                    echo "****** Uploading of Artifacts is InProgress for ${COMPONENT} ******" 
+                    echo "****** Uploading of Artifacts is Completed for ${COMPONENT} ******" 
+                }
+            }
         }
     }
 }

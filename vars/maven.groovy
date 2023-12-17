@@ -15,8 +15,7 @@ def sonarChecks() {
     sonar-scanner -Dsonar.host.url=http://${SONAR_URL}:9000 -Dsonar.java.binaries=./target/ -Dsonar.projectKey=${COMPONENT} -Dsonar.login=admin -Dsonar.password=password
     '''
     echo "****** Static Code Analysis is Completed for ${COMPONENT} ******"
-
-    }
+}
 
 def call() {
     pipeline{
@@ -54,6 +53,13 @@ def call() {
                     sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate?ref_type=heads > qualityGate.sh"
                     sh "bash qualityGate.sh admin password ${SONAR_URL} ${COMPONENT}"
                 }
+            }
+            stage('Unit Testing') {
+                steps{
+                    echo "****** Unit Testing is Started for ${COMPONENT} ******"
+                    echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
+                    echo "****** Unit Testing is Completed for ${COMPONENT} ******"
+                }   
             }
         }
     }

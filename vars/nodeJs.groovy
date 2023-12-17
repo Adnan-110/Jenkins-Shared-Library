@@ -15,7 +15,7 @@ def call() {
         pipeline{
             agent{
                 label 'ws'
-        }
+            }
         stages{
             stage('Lint Checks') {
                 steps {
@@ -35,7 +35,7 @@ def call() {
                     }
                 }   
             }
-             stage('Get the Sonar Analysis Result') {
+            stage('Get the Sonar Analysis Result') {
                 steps{
                     sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate?ref_type=heads > qualityGate.sh"
                     // sh "chmod 777 qualityGate.sh" // We added this line of code to get the execution permission aswell for all the profiles

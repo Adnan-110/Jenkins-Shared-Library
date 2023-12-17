@@ -1,34 +1,35 @@
-
 def lintChecks() {
     sh """echo ****** Starting Style Checks for ${COMPONENT} ****** """
-    //  sh "echo ****** Starting Style Checks for ${component} ******"
+    //  sh "echo ****** Starting Style Checks for ${COMPONENT} ******"
     sh "pip3 install pylint"
     sh "pytlint *.py || true"
     sh """echo ****** Style Check are Completed for ${COMPONENT} ******"""
-    //  sh "echo ****** Style Check are Completed for ${component} ******"
+    //  sh "echo ****** Style Check are Completed for ${COMPONENT} ******"
     // We have used environment variable directly
 }
-
 def call() {
     pipeline {
         agent{
                 label 'ws'
-        }
-        stages {
-            stage('Lint Checks'){
+            }
+        stages{
+            stage('Lint Checks') {
                 steps {
-                    script {
+                    script{
+                        helloWorld.info(COMPONENT)
                         lintChecks()
+                        // Below we are passing parameter to both methods/functions
+                        // helloWorld.info(component)
+                        // lintChecks(component)
                     }
                 }
             }
             stage('Static Code Analysis') {
-                steps {
-                    script {
-                        // env.ARGS="-Dsonar.sources=."
+                steps{
+                    script{
                         common.sonarChecks()
                     }
-                }
+                }   
             }
             stage('Get the Sonar Analysis Result') {
                 steps{
@@ -40,12 +41,13 @@ def call() {
                     // Instead of of using ./ to execute any file, we can simply use bash so even if we dont have execution permission it will be executed 
                 }   
             }
-             stage('Unit Testing') {
+            stage('Unit Testing') {
                 steps{
                     echo "****** Unit Testing is Started for ${COMPONENT} ******"
                     echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
                     echo "****** Unit Testing is Completed for ${COMPONENT} ******"
                 }   
             }
+        }
     }
 }

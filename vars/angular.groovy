@@ -43,12 +43,33 @@ def call() {
                     sh "bash qualityGate.sh admin password ${SONAR_URL} ${COMPONENT}"
                 }   
             }
-            stage('Unit Testing') {
-                steps{
-                    echo "****** Unit Testing is Started for ${COMPONENT} ******"
-                    echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
-                    echo "****** Unit Testing is Completed for ${COMPONENT} ******"
-                }   
+            stage('Test Cases') {
+                parallel {
+                    stage('Unit Testing') {
+                        steps{
+                            echo "****** Unit Testing is Started for ${COMPONENT} ******"
+                            // sh "mvn test" dont know cmd for Unit testing in javscript 
+                            echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
+                            echo "****** Unit Testing is Completed for ${COMPONENT} ******"
+                        }   
+                    }
+                    stage('Integration Testing') {
+                        steps{
+                            echo "****** Integration Testing is Started for ${COMPONENT} ******"
+                            // sh "mvn verify" dont know cmd for Integration testing in javscript
+                            echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
+                            echo "****** Integration Testing is Completed for ${COMPONENT} ******"
+                        }
+                    }
+                    stage('Functional Testing') {
+                        steps{
+                            echo "****** Functional Testing is Started for ${COMPONENT} ******"
+                            // sh "mvn function" dont know cmd for Functional testing in javscript
+                            echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
+                            echo "****** Functional Testing is Completed for ${COMPONENT} ******"
+                        }
+                    }
+                }
             }
         }
     }

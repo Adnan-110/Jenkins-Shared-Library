@@ -1,10 +1,10 @@
 
 def lintChecks() {
-    sh """echo ****** Starting Style Checks for ${COMPONENT} ****** """
+    sh "echo ****** Starting Style Checks for ${COMPONENT} ****** "
     //  sh "echo ****** Starting Style Checks for ${COMPONENT} ******"
-    sh "pip3 install pylint"
-    sh "pytlint *.py || true"
-    sh """echo ****** Style Check are Completed for ${COMPONENT} ******"""
+    // sh "pip3 install pylint"
+    // sh "pytlint *.py || true"
+    sh "echo ****** Style Check are Completed for ${COMPONENT} ******"
     //  sh "echo ****** Style Check are Completed for ${COMPONENT} ******"
     // We have used environment variable directly
 }

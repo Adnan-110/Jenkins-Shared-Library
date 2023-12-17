@@ -39,6 +39,7 @@
             stage('Static Code Analysis') {
                 steps{
                     script{
+                        env.ARGS="-Dsonar.java.binaries=./target/"
                         common.sonarChecks()
                     }
                 }   

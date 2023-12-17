@@ -39,12 +39,33 @@ def call() {
                     sh "bash qualityGate.sh admin password 172.31.39.131 ${COMPONENT}"
                 }
             }
-            stage('Unit Testing') {
-                steps{
-                    echo "****** Unit Testing is Started for ${COMPONENT} ******"
-                    echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
-                    echo "****** Unit Testing is Completed for ${COMPONENT} ******"
-                }   
+            stage('Test Cases') {
+                parallel {
+                    stage('Unit Testing') {
+                        steps{
+                            echo "****** Unit Testing is Started for ${COMPONENT} ******"
+                            // sh "python -m unittest"
+                            echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
+                            echo "****** Unit Testing is Completed for ${COMPONENT} ******"
+                        }   
+                    }
+                    stage('Integration Testing') {
+                        steps{
+                            echo "****** Integration Testing is Started for ${COMPONENT} ******"
+                            // sh "python -m unittest"   dont know cmd for integration testing in python
+                            echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
+                            echo "****** Integration Testing is Completed for ${COMPONENT} ******"
+                        }
+                    }
+                    stage('Functional Testing') {
+                        steps{
+                            echo "****** Functional Testing is Started for ${COMPONENT} ******"
+                            // sh "python -m unittest"   dont know cmd for Functional testing in python
+                            echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
+                            echo "****** Functional Testing is Completed for ${COMPONENT} ******"
+                        }
+                    }
+                }
             }
         }
     }

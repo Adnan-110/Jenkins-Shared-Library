@@ -46,12 +46,33 @@ def call() {
                     // Instead of of using ./ to execute any file, we can simply use bash so even if we dont have execution permission it will be executed 
                 }   
             }
-            stage('Unit Testing') {
-                steps{
-                    echo "****** Unit Testing is Started for ${COMPONENT} ******"
-                    echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
-                    echo "****** Unit Testing is Completed for ${COMPONENT} ******"
-                }   
+            stage('Test Cases') {
+                parallel {
+                    stage('Unit Testing') {
+                        steps{
+                            echo "****** Unit Testing is Started for ${COMPONENT} ******"
+                            // sh "npm test"
+                            echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
+                            echo "****** Unit Testing is Completed for ${COMPONENT} ******"
+                        }   
+                    }
+                    stage('Integration Testing') {
+                        steps{
+                            echo "****** Integration Testing is Started for ${COMPONENT} ******"
+                            // sh "npm verify"
+                            echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
+                            echo "****** Integration Testing is Completed for ${COMPONENT} ******"
+                        }
+                    }
+                    stage('Functional Testing') {
+                        steps{
+                            echo "****** Functional Testing is Started for ${COMPONENT} ******"
+                            // sh "npm function"
+                            echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
+                            echo "****** Functional Testing is Completed for ${COMPONENT} ******"
+                        }
+                    }
+                }
             }
         }
     }

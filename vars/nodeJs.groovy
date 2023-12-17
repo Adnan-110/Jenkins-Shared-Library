@@ -90,7 +90,10 @@ def call() {
                 }
             }
             stage('Prepare Artifacts'){  // This block will be executed only when run from tag 
-                when { expression { env.TAG_NAME != null } } 
+                when { 
+                    expression { env.TAG_NAME != null } 
+                    expression {env.ARTIFACTS_AVAILABILITY == "" }
+                } 
                 steps{
                     echo "****** Artifacts Preparation is Started for ${COMPONENT} ******" 
                     sh '''
@@ -103,7 +106,10 @@ def call() {
                 }
             }
             stage('Upload Artifacts to Nexus'){  // This block will be executed only when run from tag 
-                when { expression {env.TAG_NAME != null } }
+                when { 
+                    expression {env.TAG_NAME != null } 
+                    expression {env.ARTIFACTS_AVAILABILITY == "" }
+                }
                 steps{
                     echo "****** Uploading of Artifacts is Started for ${COMPONENT} ******" 
                     sh "curl -f -v -u ${NEXUS_CRED_USR}:${NEXUS_CRED_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"

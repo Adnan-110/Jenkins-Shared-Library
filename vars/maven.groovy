@@ -17,6 +17,7 @@ def call() {
         }
         environment{
             SONAR_CRED = credentials('SONAR_CRED')
+            NEXUS_CRED = credentials('NEXUS_CRED')
         }
         stages{
             stage('Lint Checks') {
@@ -82,6 +83,9 @@ def call() {
                 when { expression {env.TAG_NAME != null } } 
                 steps{
                     echo "****** Artifacts Preparation is Started for ${COMPONENT} ******" 
+                    sh '''
+
+                    '''
                     echo "****** Artifacts Preparation is InProgress for ${COMPONENT} ******" 
                     echo "****** Artifacts Preparation is Completed for ${COMPONENT} ******" 
                 }

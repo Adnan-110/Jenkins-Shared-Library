@@ -83,9 +83,9 @@ def call() {
                 steps{
                     echo "****** ${COMPONENT} Artifacts Availabilty checking is Started ******"
                     script{
-                         env.ARTIFACTS_AVAILABILITY = sh(returnStdout:true, script: "curl https://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}-zip || true" )
+                        env.UPLOAD_STATUS = sh(returnStdout: true, script: "curl http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}.zip || true")
                     }
-                    echo ARTIFACTS_AVAILABILITY
+                    echo UPLOAD_STATUS
                     echo "****** ${COMPONENT} Artifacts Availabilty checking is Completed ******"
                 }
             }
@@ -119,3 +119,4 @@ def call() {
         }
     }
 }
+

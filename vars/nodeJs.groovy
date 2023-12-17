@@ -76,7 +76,7 @@ def call() {
                     }
                 }
             }
-            stage('Prepare Artifacts for ${COMPONENT}'){  // This block will be executed only when run from tag 
+            stage('Prepare Artifacts'){  // This block will be executed only when run from tag 
                 when { expression { env.TAG_NAME != null } } 
                 steps{
                     echo "****** Artifacts Preparation is Started for ${COMPONENT} ******" 
@@ -89,11 +89,11 @@ def call() {
                     echo "****** Artifacts Preparation is Completed for ${COMPONENT} ******" 
                 }
             }
-            stage('Uploading Artifacts for ${COMPONENT}'){  // This block will be executed only when run from tag 
+            stage('Upload Artifacts to Nexus'){  // This block will be executed only when run from tag 
                 when { expression {env.TAG_NAME != null } }
                 steps{
                     echo "****** Uploading of Artifacts is Started for ${COMPONENT} ******" 
-                    sh "curl -v -u ${NEXUS_CRED_USR}:${NEXUS_CRED_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.86.85:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                    sh "curl -f -v -u ${NEXUS_CRED_USR}:${NEXUS_CRED_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.86.85:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                     echo "****** Uploading of Artifacts is Completed for ${COMPONENT} ******" 
                 }
             }

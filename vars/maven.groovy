@@ -1,4 +1,4 @@
-    def lintChecks() {
+def lintChecks() {
         sh """echo ****** Starting Style Checks for ${COMPONENT} ****** """
         //  sh "echo ****** Starting Style Checks for ${component} ******"
         sh "mvn checkstyle:check || true"
@@ -8,19 +8,18 @@
     }
     // def call() {
     // Above we are not catching the parameter value
-
    
     def call() {
             pipeline{
                 agent{
                     label 'ws'
-                }
-                environment{
-                    SONAR_CRED = credentials('SONAR_CRED')
-                }
-                tools{  // This option will make build tools available only for this single run and will not install permanently.
-                    maven 'maven-390' // In This way we configured in Jenkins->mangage->Tools section that whenever maven-390 is passed make maven-3.9.0 version available
-                }
+            }
+            environment{
+                SONAR_CRED = credentials('SONAR_CRED')
+            }
+            tools{  // This option will make build tools available only for this single run and will not install permanently.
+            maven 'maven-390' // In This way we configured in Jenkins->mangage->Tools section that whenever maven-390 is passed make maven-3.9.0 version available
+        }
             stages{
                 stage('Lint Checks') {
                     steps {

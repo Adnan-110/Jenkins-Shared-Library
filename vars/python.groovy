@@ -1,3 +1,4 @@
+
 def lintChecks() {
     sh """echo ****** Starting Style Checks for ${COMPONENT} ****** """
     //  sh "echo ****** Starting Style Checks for ${COMPONENT} ******"
@@ -18,7 +19,7 @@ def call() {
                     script{
                         helloWorld.info(COMPONENT)
                         lintChecks()
-                        // Below we are passing parameter to both methods/functions
+                        // Below we are passing parameters to both methods/functions
                         // helloWorld.info(component)
                         // lintChecks(component)
                     }

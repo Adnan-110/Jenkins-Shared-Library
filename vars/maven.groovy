@@ -12,7 +12,7 @@ def lintChecks() {
 def sonarChecks() {
     echo "****** Starting Static Code Analysis for ${COMPONENT} ******"    
     sh '''
-    sonar-scanner -Dsonar.host.url=http://${SONAR_URL}:9000 -Dsonar.java.binaries=./target/ -Dsonar.projectKey=${COMPONENT} -Dsonar.login=admin -Dsonar.password=password
+    sonar-scanner -Dsonar.host.url=http://${SONAR_URL}:9000 ${ARGS} -Dsonar.projectKey=${COMPONENT} -Dsonar.login=admin -Dsonar.password=password
     '''
     echo "****** Static Code Analysis is Completed for ${COMPONENT} ******"
 }
@@ -44,6 +44,7 @@ def call() {
             stage('Static Code Analysis') {
                 steps{
                    script{
+                    env.ARGS="-Dsonar.java.binaries=./target/"
                     sonarChecks()
                    }
                 }

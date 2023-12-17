@@ -1,29 +1,37 @@
- def lintChecks() {
+def lintChecks() {
         sh """echo ****** Starting Style Checks for ${COMPONENT} ****** """
         //  sh "echo ****** Starting Style Checks for ${component} ******"
         sh "mvn checkstyle:check || true"
-         sh """echo ****** Style Check are Completed for ${COMPONENT} ******"""
+        sh """echo ****** Style Check are Completed for ${COMPONENT} ******"""
         //  sh "echo ****** Style Check are Completed for ${component} ******"
         // We have used environment variable directly
     }
-    // def call() {
     // Above we are not catching the parameter value
-    
-
-def call() {
-    pipeline{
-        agent{
-            label 'ws'
-        stage('Lint Checks') {
-            steps {
-                script{
+   
+    def call() {
+            pipeline{
+                agent{
+                    label 'ws'
+            }
+            environment{
+                SONAR_CRED = credentials('SONAR_CRED')
+            }
+            tools{  // This option will make build tools available only for this single run and will not install permanently.
+            maven 'maven-390' // In This way we configured in Jenkins->mangage->Tools section that whenever maven-390 is passed make maven-3.9.0 version available
+        }
+            stages{
+                stage('Lint Checks') {
+                    steps {
+                        script{
+                            helloWorld.info(COMPONENT)
+                            lintChecks()
                             // Below we are not passing any parameter to both methods/functions
                             // helloWorld.info()
                             // lintChecks()
+                        }
+                    }
                 }
-            }
-        }
-                 stage{
+            stage{
                 steps {
                     sh "mvn clean compile"
                     sh "ls -lrth target/"
@@ -32,6 +40,7 @@ def call() {
             stage('Static Code Analysis') {
                 steps{
                     script{
+                        env.ARGS="-Dsonar.java.binaries=./target/"
                         common.sonarChecks()
                     }
                 }   

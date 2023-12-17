@@ -7,16 +7,6 @@ def lintChecks() {
     //  sh "echo ****** Style Check are Completed for ${COMPONENT} ******"
     // We have used environment variable directly
 }
-// def call() {
-// Above we are not catching the parameter value
-
-// def sonarChecks() {
-//     echo "****** Starting Static Code Analysis for ${COMPONENT} ******"    
-//     sh '''
-//     sonar-scanner -Dsonar.host.url=http://${SONAR_URL}:9000 -Dsonar.sources=. -Dsonar.projectKey=${COMPONENT} -Dsonar.login=admin -Dsonar.password=password
-//     '''
-//     echo "****** Static Code Analysis is Completed for ${COMPONENT} ******"
-// }
 
 def call() {
     pipeline{

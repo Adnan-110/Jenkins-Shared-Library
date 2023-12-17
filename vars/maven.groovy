@@ -14,10 +14,13 @@
             pipeline{
                 agent{
                     label 'ws'
-            }
-            tools{  // This option will make build tools available only for this single run and will not install permanently.
-            maven 'maven-390' // In This way we configured in Jenkins->mangage->Tools section that whenever maven-390 is passed make maven-3.9.0 version available
-        }
+                }
+                environment{
+                    SSH_CRED = credentials('SONAR_CRED')
+                }
+                tools{  // This option will make build tools available only for this single run and will not install permanently.
+                    maven 'maven-390' // In This way we configured in Jenkins->mangage->Tools section that whenever maven-390 is passed make maven-3.9.0 version available
+                }
             stages{
                 stage('Lint Checks') {
                     steps {

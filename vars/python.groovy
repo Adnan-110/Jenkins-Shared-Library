@@ -16,6 +16,8 @@ def call() {
         environment{
             SONAR_CRED = credentials('SONAR_CRED')
             NEXUS_CRED = credentials('NEXUS_CRED')
+            SONAR_URL="172.31.39.131"
+            NEXUS_URL="172.31.86.85"
         }
         stages{
             stage('Lint Checks') {

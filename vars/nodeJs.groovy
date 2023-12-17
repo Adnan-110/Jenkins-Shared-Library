@@ -16,6 +16,8 @@ def call() {
             environment{
                     SONAR_CRED = credentials('SONAR_CRED')
                     NEXUS_CRED = credentials('NEXUS_CRED')
+                    SONAR_URL="172.31.39.131"
+                    NEXUS_URL="172.31.86.85"
                 }
         stages{
             stage('Lint Checks') {
@@ -76,6 +78,17 @@ def call() {
                     }
                 }
             }
+            stage('Checking Artifacts Availability on Nexus'){  // This block will be executed only when run from tag 
+                when { expression { env.TAG_NAME != null } } 
+                steps{
+                    echo "****** ${COMPONENT} Artifacts Availabilty checking is Started ******"
+                    script{
+                         env.ARTIFACTS_AVAILABILITY = sh(returnStdout:true, script: "curl https://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}-zip || true" )
+                         print ARTIFACTS_AVAILABILITY
+                    }
+                    echo "****** ${COMPONENT} Artifacts Availabilty checking is Completed ******"
+                }
+            }
             stage('Prepare Artifacts'){  // This block will be executed only when run from tag 
                 when { expression { env.TAG_NAME != null } } 
                 steps{
@@ -93,7 +106,7 @@ def call() {
                 when { expression {env.TAG_NAME != null } }
                 steps{
                     echo "****** Uploading of Artifacts is Started for ${COMPONENT} ******" 
-                    sh "curl -f -v -u ${NEXUS_CRED_USR}:${NEXUS_CRED_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://172.31.86.85:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                    sh "curl -f -v -u ${NEXUS_CRED_USR}:${NEXUS_CRED_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                     echo "****** Uploading of Artifacts is Completed for ${COMPONENT} ******" 
                 }
             }

@@ -30,7 +30,6 @@ def call() {
                         helloWorld.info(COMPONENT)
                         lintChecks()
                     }
-
                 }
             }
             stage('Static Code Analysis') {

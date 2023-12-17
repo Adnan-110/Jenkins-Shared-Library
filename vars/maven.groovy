@@ -19,7 +19,7 @@ def call() {
             stage('Lint Checks') {
                 steps {
                     script{
-                        hellowWorld.info(COMPONENT)
+                        helloWorld.info(COMPONENT)
                         lintChecks()
                     }
 

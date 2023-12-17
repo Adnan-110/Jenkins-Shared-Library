@@ -84,8 +84,8 @@ def call() {
                     echo "****** ${COMPONENT} Artifacts Availabilty checking is Started ******"
                     script{
                          env.ARTIFACTS_AVAILABILITY = sh(returnStdout:true, script: "curl https://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}-zip || true" )
-                         print ARTIFACTS_AVAILABILITY
                     }
+                    echo ARTIFACTS_AVAILABILITY
                     echo "****** ${COMPONENT} Artifacts Availabilty checking is Completed ******"
                 }
             }

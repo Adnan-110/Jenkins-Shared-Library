@@ -76,14 +76,14 @@ def call() {
                     }
                 }
             }
-            stage("Prepare Artifacts for ${COMPONENT}"){
+            stage('Prepare Artifacts for ${COMPONENT}'){
                 steps{
                     echo "****** Artifacts Preparation is Started for ${COMPONENT} ******" 
                     echo "****** Artifacts Preparation is InProgress for ${COMPONENT} ******" 
                     echo "****** Artifacts Preparation is Completed for ${COMPONENT} ******" 
                 }
             }
-            stage("Uploading Artifacts for ${COMPONENT}"){
+            stage('Uploading Artifacts for ${COMPONENT}'){
                 steps{
                     echo "****** Uploading of Artifacts is Started for ${COMPONENT} ******" 
                     echo "****** Uploading of Artifacts is InProgress for ${COMPONENT} ******" 

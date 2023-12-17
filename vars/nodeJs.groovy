@@ -17,7 +17,7 @@ def call() {
                 label 'ws'
             }
             environment{
-                    SSH_CRED = credentials('SONAR_CRED')
+                    SONAR_CRED = credentials('SONAR_CRED')
                 }
         stages{
             stage('Lint Checks') {

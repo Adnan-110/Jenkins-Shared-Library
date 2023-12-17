@@ -6,7 +6,6 @@ def lintChecks() {
         //  sh "echo ****** Style Check are Completed for ${component} ******"
         // We have used environment variable directly
     }
-    // def call() {
     // Above we are not catching the parameter value
    
     def call() {

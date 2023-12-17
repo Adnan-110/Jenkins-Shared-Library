@@ -35,11 +35,6 @@ def call() {
             }
             stage('Static Code Analysis') {
                 steps{
-                   echo "****** Starting Static Code Analysis for ${COMPONENT} ******"
-                }
-            }
-            stage('Static Code Analysis') {
-                steps{
                    script{
                     sonarChecks()
                    }

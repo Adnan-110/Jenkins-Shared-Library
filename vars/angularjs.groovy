@@ -9,13 +9,14 @@ def lintChecks() {
 }
 // def call() {
 // Above we are not catching the parameter value
-
-
 def call() {
-        pipeline{
-            agent{
-                label 'ws'
-            }
+    pipeline{
+        agent{
+            label 'ws'
+        }
+        environment{
+            SONAR_CRED = credentials('SONAR_CRED')
+        }
         stages{
             stage('Lint Checks') {
                 steps {
@@ -39,11 +40,7 @@ def call() {
             stage('Get the Sonar Analysis Result') {
                 steps{
                     sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate?ref_type=heads > qualityGate.sh"
-                    // sh "chmod 777 qualityGate.sh" // We added this line of code to get the execution permission aswell for all the profiles
-                    // sh "./qualityGate.sh admin password ${SONAR_URL} ${component}"
-                    //Instead of changing file permission to execute like above we can simply perform like below
                     sh "bash qualityGate.sh admin password ${SONAR_URL} ${COMPONENT}"
-                    // Instead of of using ./ to execute any file, we can simply use bash so even if we dont have execution permission it will be executed 
                 }   
             }
             stage('Unit Testing') {

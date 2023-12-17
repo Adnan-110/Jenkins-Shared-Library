@@ -81,7 +81,12 @@ def call() {
                 when { expression { env.TAG_NAME != null } } 
                 steps{
                     echo "****** Artifacts Preparation is Started for ${COMPONENT} ******" 
-                    echo "****** Artifacts Preparation is InProgress for ${COMPONENT} ******" 
+                    sh '''
+                        npm install 
+                        ls -lrth
+                        zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
+                        ls -lrth
+                    '''
                     echo "****** Artifacts Preparation is Completed for ${COMPONENT} ******" 
                 }
             }
@@ -89,7 +94,7 @@ def call() {
                 when { expression {env.TAG_NAME != null } }
                 steps{
                     echo "****** Uploading of Artifacts is Started for ${COMPONENT} ******" 
-                    echo "****** Uploading of Artifacts is InProgress for ${COMPONENT} ******" 
+                    sh "curl -v -u ${NEXUS_CRED_USR}:${NEXUS_CRED_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
                     echo "****** Uploading of Artifacts is Completed for ${COMPONENT} ******" 
                 }
             }

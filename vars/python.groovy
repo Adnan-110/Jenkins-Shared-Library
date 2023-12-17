@@ -10,18 +10,21 @@ def lintChecks() {
 // def call() {
 // Above we are not catching the parameter value
 
-def sonarChecks() {
-    echo "****** Starting Static Code Analysis for ${COMPONENT} ******"    
-    sh '''
-    sonar-scanner -Dsonar.host.url=http://${SONAR_URL}:9000 -Dsonar.sources=. -Dsonar.projectKey=${COMPONENT} -Dsonar.login=admin -Dsonar.password=password
-    '''
-    echo "****** Static Code Analysis is Completed for ${COMPONENT} ******"
-}
+// def sonarChecks() {
+//     echo "****** Starting Static Code Analysis for ${COMPONENT} ******"    
+//     sh '''
+//     sonar-scanner -Dsonar.host.url=http://${SONAR_URL}:9000 -Dsonar.sources=. -Dsonar.projectKey=${COMPONENT} -Dsonar.login=admin -Dsonar.password=password
+//     '''
+//     echo "****** Static Code Analysis is Completed for ${COMPONENT} ******"
+// }
 
 def call() {
     pipeline{
         agent{
             label 'ws'
+        }
+        environment{
+            SONAR_CRED = credentials('SONAR_CRED')
         }
         stages{
             stage('Lint Checks') {
@@ -35,7 +38,8 @@ def call() {
             stage('Static Code Analysis') {
                 steps{
                    script{
-                    sonarChecks()
+                    env.ARGS="-Dsonar.sources=."
+                    common.sonarChecks()
                    }
                 }
             }

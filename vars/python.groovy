@@ -43,6 +43,7 @@ def call() {
                 parallel {
                     stage('Unit Testing') {
                         steps{
+                            sh "env"
                             echo "****** Unit Testing is Started for ${COMPONENT} ******"
                             // sh "python -m unittest"
                             echo "****** Unit Testing is InProgress for ${COMPONENT} ******"

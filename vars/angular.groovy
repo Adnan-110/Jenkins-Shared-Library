@@ -47,6 +47,7 @@ def call() {
                 parallel {
                     stage('Unit Testing') {
                         steps{
+                            sh "env"
                             echo "****** Unit Testing is Started for ${COMPONENT} ******"
                             // sh "mvn test" dont know cmd for Unit testing in javscript 
                             echo "****** Unit Testing is InProgress for ${COMPONENT} ******"

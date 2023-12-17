@@ -1,14 +1,22 @@
 def lintChecks() {
     sh """echo ****** Starting Style Checks for ${COMPONENT} ****** """
     //  sh "echo ****** Starting Style Checks for ${COMPONENT} ******"
-    sh "npm install jslint"
-    sh "/home/centos/node_modules/jslint/bin/jslint.js server.js || true"
+    sh "mvn checkstyle:check || true"
     sh """echo ****** Style Check are Completed for ${COMPONENT} ******"""
     //  sh "echo ****** Style Check are Completed for ${COMPONENT} ******"
     // We have used environment variable directly
 }
 // def call() {
 // Above we are not catching the parameter value
+
+def sonarChecks() {
+    echo "****** Starting Static Code Analysis for ${COMPONENT} ******"    
+    sh '''
+    sonar-scanner -Dsonar.host.url=http://${SONAR_URL}:9000 -Dsonar.java.binaries=./target/ -Dsonar.projectKey=${COMPONENT} -Dsonar.login=admin -Dsonar.password=password
+    '''
+    echo "****** Static Code Analysis is Completed for ${COMPONENT} ******"
+
+    }
 
 def call() {
     pipeline{
@@ -25,9 +33,23 @@ def call() {
 
                 }
             }
+            stage('Compiling Java Code'){
+                steps{
+                    sh "mvn clean compile"
+                    sh "ls -lrth target/"
+                }
+            }
             stage('Static Code Analysis') {
                 steps{
-                   echo "****** Starting Static Code Analysis for ${COMPONENT} ******"
+                   script{
+                    sonarChecks()
+                   }
+                }
+            }
+            stage('Get the Sonar Analysis Result') {
+                steps{
+                    sh "curl https://gitlab.com/thecloudcareers/opensource/-/raw/master/lab-tools/sonar-scanner/quality-gate?ref_type=heads > qualityGate.sh"
+                    sh "bash qualityGate.sh admin password ${SONAR_URL} ${COMPONENT}"
                 }
             }
         }

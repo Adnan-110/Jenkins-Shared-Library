@@ -81,8 +81,22 @@ def call() {
                     }
                 }
             }
+            stage('Checking Artifacts Availability on Nexus'){  // This block will be executed only when run from tag 
+                when { expression { env.TAG_NAME != null } } 
+                steps{
+                    echo "****** ${COMPONENT} Artifacts Availabilty checking is Started ******"
+                    script{
+                        env.UPLOAD_STATUS = sh(returnStdout: true, script: "curl http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}.zip || true")
+                    }
+                    echo UPLOAD_STATUS
+                    echo "****** ${COMPONENT} Artifacts Availabilty checking is Completed ******"
+                }
+            }
             stage('Prepare Artifacts for ${COMPONENT}'){  // This block will be executed only when run from tag 
-                when { expression {env.TAG_NAME != null } } 
+                when { 
+                    expression { env.TAG_NAME != null } 
+                    expression {env.ARTIFACTS_AVAILABILITY == "" }
+                } 
                 steps{
                     echo "****** Artifacts Preparation is Started for ${COMPONENT} ******" 
                     sh '''
@@ -93,7 +107,10 @@ def call() {
                 }
             }
             stage('Uploading Artifacts for ${COMPONENT}'){ // This block will be executed only when run from tag
-                when{ expression {env.TAG_NAME != null } }
+                when { 
+                    expression { env.TAG_NAME != null } 
+                    expression {env.ARTIFACTS_AVAILABILITY == "" }
+                } 
                 steps{
                     echo "****** Uploading of Artifacts is Started for ${COMPONENT} ******" 
                     echo "****** Uploading of Artifacts is InProgress for ${COMPONENT} ******" 

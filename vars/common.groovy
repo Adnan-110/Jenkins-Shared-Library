@@ -92,7 +92,15 @@ def testCases(){
 
         stages['Unit_Testing'] = {
             echo "****** Unit Testing is Started for ${COMPONENT} ******"
-            // sh "npm test"
+            if(env.APP_TYPE == "node"){
+                sh "npm test"
+            }
+            else if(env.APP_TYPE == "java"){
+                sh "mvn test"
+            } 
+            else if(env.APP_TYPE == "python"){
+                sh "python -m unittest"
+            }
             echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
             echo "****** Unit Testing is Completed for ${COMPONENT} ******"
             }

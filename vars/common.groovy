@@ -124,8 +124,8 @@ def generatingArtifacts() {
         stage('Generating the Artifacts') {
             echo "Generating the ${COMPONENT} Artifacts"
 
-            if(env.APPTYPE == "node") {
-                sh "np install"
+            if(env.APP_TYPE="node") {
+                sh "npm install"
                 sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
             }
             else if(env.APP_TYPE == "java"){

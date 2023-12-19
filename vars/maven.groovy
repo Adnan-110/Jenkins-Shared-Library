@@ -9,6 +9,10 @@ def call(){
         common.lintChecks()
         env.ARGS="-Dsonar.java.binaries=./target/"
         common.sonarChecks()
+        common.testCases()
+        if(env.TAG_NAME != null || env.TAG_NAME != "") {
+            common.generatingArtifacts()
+        }
     }
 }
 

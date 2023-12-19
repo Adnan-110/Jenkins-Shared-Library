@@ -14,7 +14,7 @@ def lintChecks() {
                    echo ****** Style Check are Completed for ${COMPONENT} ****** 
              '''
         }
-        else if (env.APP_TYPE == "maven"){
+        else if (env.APP_TYPE == "java"){
             sh '''echo ****** Starting Style Checks for ${COMPONENT} ****** 
                #  mvn checkstyle:check || true
                   echo ****** Style Check are Completed for ${COMPONENT} ****** 

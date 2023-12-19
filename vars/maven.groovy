@@ -1,11 +1,15 @@
 def call(){
     node {
         git branch: 'main', url: "https://github.com/Adnan-110/${COMPONENT}.git"
-        tool name: 'maven-390', type: 'maven'
+        // tool name: 'maven-390', type: 'maven'
         // tool {
         //     name: 'Maven 3.9.0'
         //     type: 'hudson.tasks.Maven_MavenInstallation'
         // }
+        withMaven(maven: 'Maven 3.9.0') {
+            // Your Maven build steps here
+            sh 'mvn clean install'
+        }
         env.SONAR_URL="172.31.39.131"
         env.NEXUS_URL="172.31.86.85"
         env.APP_TYPE="java"

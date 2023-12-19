@@ -79,7 +79,7 @@ def call() {
             stage('Prepare Artifacts for ${COMPONENT}'){  // This block will be executed only when run from tag
                 when { 
                     expression { env.TAG_NAME != null } 
-                    expression {env.ARTIFACTS_AVAILABILITY == "" }
+                    expression {env.UPLOAD_STATUS == "" || env.UPLOAD_STATUS == null}
                 } 
                 steps{
                     echo "****** Artifacts Preparation is Started for ${COMPONENT} ******" 
@@ -90,7 +90,7 @@ def call() {
             stage('Uploading Artifacts for ${COMPONENT}'){ // This block will be executed only when run from tag
                 when { 
                     expression { env.TAG_NAME != null } 
-                    expression {env.ARTIFACTS_AVAILABILITY == "" }
+                    expression {env.UPLOAD_STATUS == "" || env.UPLOAD_STATUS == null}
                 } 
                 steps{
                     echo "****** Uploading of Artifacts is Started for ${COMPONENT} ******" 

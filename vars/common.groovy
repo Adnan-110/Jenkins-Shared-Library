@@ -8,29 +8,27 @@ def sonarChecks() {
 def lintChecks() {
     stage('Lint Checks') {
         if (env.APP_TYPE ==  "python"){
-             sh '''echo ****** Starting Style Checks for ${COMPONENT} ****** 
-                #  pip3 install pylint
-                #  pylint *.py || true
-                   echo ****** Style Check are Completed for ${COMPONENT} ****** 
-             '''
+            echo " ****** Starting Style Checks for ${COMPONENT} ****** " 
+            //  pip3 install pylint
+            //  pylint *.py || true
+            echo " ****** Style Check are Completed for ${COMPONENT} ****** " 
+             
         }
         else if (env.APP_TYPE == "java"){
-            sh '''echo ****** Starting Style Checks for ${COMPONENT} ****** 
-               #  mvn checkstyle:check || true
-                  echo ****** Style Check are Completed for ${COMPONENT} ****** 
-            '''
+            echo " ****** Starting Style Checks for ${COMPONENT} ****** "
+            //  mvn checkstyle:check || true
+            echo " ****** Style Check are Completed for ${COMPONENT} ****** "
+            
         }
         else if (env.APP_TYPE == "node"){
-            sh '''echo ****** Starting Style Checks for ${COMPONENT} ****** 
-               # npm install jslint
-               # /home/centos/node_modules/jslint/bin/jslint.js server.js || true
-                  echo ****** Style Check are Completed for ${COMPONENT} ****** 
-            '''
+            echo " ****** Starting Style Checks for ${COMPONENT} ****** "
+            // npm install jslint
+            // /home/centos/node_modules/jslint/bin/jslint.js server.js || true
+            echo " ****** Style Check are Completed for ${COMPONENT} ****** " 
         }
         else{
-            sh '''echo ****** Starting Style Checks for ${COMPONENT} ****** 
-                  echo ****** Style Check are Completed for ${COMPONENT} ****** 
-            '''
+            echo " ****** Starting Style Checks for ${COMPONENT} ****** "
+            echo " ****** Style Check are Completed for ${COMPONENT} ******" 
         }
     }
    

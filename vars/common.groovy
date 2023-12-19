@@ -34,6 +34,7 @@ def lintChecks() {
     }
    
 }
+// below given all 3 ways works for parallel execution in jenkins scripted pipeline
 
 // def testCases() {
 //     stage('Testing') {
@@ -60,27 +61,56 @@ def lintChecks() {
 //     }
 // }
 
-def testCases() {
+// def testCases() {
+//     stage('Testing') {
+//         parallel([
+//             Unit_Testing: {
+//                 echo "****** Unit Testing is Started for ${COMPONENT} ******"
+//                 // sh "npm test"
+//                 echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
+//                 echo "****** Unit Testing is Completed for ${COMPONENT} ******"
+//             },
+//             Integration_Testing: {
+//                 echo "****** Integration Testing is Started for ${COMPONENT} ******"
+//                 // sh "npm verify"
+//                 echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
+//                 echo "****** Integration Testing is Completed for ${COMPONENT} ******"
+//             },
+//             Functional_Testing: {
+//                 echo "****** Functional Testing is Started for ${COMPONENT} ******"
+//                 // sh "npm function"
+//                 echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
+//                 echo "****** Functional Testing is Completed for ${COMPONENT} ******"
+//             }
+//         ])
+//     }
+// }
+
+def testCases(){
     stage('Testing') {
-        parallel([
-            Unit_Testing: {
-                echo "****** Unit Testing is Started for ${COMPONENT} ******"
-                // sh "npm test"
-                echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
-                echo "****** Unit Testing is Completed for ${COMPONENT} ******"
-            },
-            Integration_Testing: {
-                echo "****** Integration Testing is Started for ${COMPONENT} ******"
-                // sh "npm verify"
-                echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
-                echo "****** Integration Testing is Completed for ${COMPONENT} ******"
-            },
-            Functional_Testing: {
-                echo "****** Functional Testing is Started for ${COMPONENT} ******"
-                // sh "npm function"
-                echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
-                echo "****** Functional Testing is Completed for ${COMPONENT} ******"
+        def stages = [:]
+
+        stages['Unit_Testing'] = {
+            echo "****** Unit Testing is Started for ${COMPONENT} ******"
+            // sh "npm test"
+            echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
+            echo "****** Unit Testing is Completed for ${COMPONENT} ******"
             }
-        ])
+        
+        stages['Integration_Testing'] = {
+            echo "****** Integration Testing is Started for ${COMPONENT} ******"
+            // sh "npm verify"
+            echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
+            echo "****** Integration Testing is Completed for ${COMPONENT} ******" 
+        }
+
+        stages['Functional_Testing'] = {
+            echo "****** Functional Testing is Started for ${COMPONENT} ******"
+            // sh "npm function"
+            echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
+            echo "****** Functional Testing is Completed for ${COMPONENT} ******"
+        }
+
+        parallel(stages)
     }
 }

@@ -24,6 +24,7 @@ def call() {
             stage('Static Code Analysis') {
                 steps{
                     script{
+                        sh "env"
                         env.ARGS="-Dsonar.sources=."
                         common.sonarChecks()
                     }

@@ -35,51 +35,52 @@ def lintChecks() {
    
 }
 
-def testCases() {
-    stage('Testing') {
-        parallel(
-            'Unit_Testing': {
-                echo "****** Unit Testing is Started for ${COMPONENT} ******"
-                // sh "npm test"
-                echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
-                echo "****** Unit Testing is Completed for ${COMPONENT} ******"
-            },
-            'Integration_Testing': {
-                echo "****** Integration Testing is Started for ${COMPONENT} ******"
-                // sh "npm verify"
-                echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
-                echo "****** Integration Testing is Completed for ${COMPONENT} ******"
-            },
-            'Functional_Testing': {
-                echo "****** Functional Testing is Started for ${COMPONENT} ******"
-                // sh "npm function"
-                echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
-                echo "****** Functional Testing is Completed for ${COMPONENT} ******"
-            }
-        )
-    }
-}
-// testCases() {
+// def testCases() {
 //     stage('Testing') {
-//         parallel([
-//             Unit_Testing: {
+//         parallel(
+//             'Unit_Testing': {
 //                 echo "****** Unit Testing is Started for ${COMPONENT} ******"
 //                 // sh "npm test"
 //                 echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
 //                 echo "****** Unit Testing is Completed for ${COMPONENT} ******"
 //             },
-//             Integration_Testing: {
+//             'Integration_Testing': {
 //                 echo "****** Integration Testing is Started for ${COMPONENT} ******"
 //                 // sh "npm verify"
 //                 echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
 //                 echo "****** Integration Testing is Completed for ${COMPONENT} ******"
-//             }
-//             Functional_Testing: {
+//             },
+//             'Functional_Testing': {
 //                 echo "****** Functional Testing is Started for ${COMPONENT} ******"
 //                 // sh "npm function"
 //                 echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
 //                 echo "****** Functional Testing is Completed for ${COMPONENT} ******"
 //             }
-//         ])
+//         )
 //     }
 // }
+
+def testCases() {
+    stage('Testing') {
+        parallel([
+            Unit_Testing: {
+                echo "****** Unit Testing is Started for ${COMPONENT} ******"
+                // sh "npm test"
+                echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
+                echo "****** Unit Testing is Completed for ${COMPONENT} ******"
+            },
+            Integration_Testing: {
+                echo "****** Integration Testing is Started for ${COMPONENT} ******"
+                // sh "npm verify"
+                echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
+                echo "****** Integration Testing is Completed for ${COMPONENT} ******"
+            },
+            Functional_Testing: {
+                echo "****** Functional Testing is Started for ${COMPONENT} ******"
+                // sh "npm function"
+                echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
+                echo "****** Functional Testing is Completed for ${COMPONENT} ******"
+            }
+        ])
+    }
+}

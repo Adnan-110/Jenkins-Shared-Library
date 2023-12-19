@@ -1,5 +1,3 @@
-
-
 def call() {
     pipeline{
         agent{
@@ -19,7 +17,7 @@ def call() {
                 steps {
                     script{
                         helloWorld.info(COMPONENT)
-                        lintChecks()
+                        common.lintChecks()
                     }
 
                 }

@@ -1,13 +1,3 @@
-def lintChecks() {
-    sh """echo ****** Starting Style Checks for ${COMPONENT} ****** """
-    //  sh "echo ****** Starting Style Checks for ${COMPONENT} ******"
-    // sh "pip3 install pylint"
-    // sh "pylint *.py || true"
-    sh """echo ****** Style Check are Completed for ${COMPONENT} ******"""
-    //  sh "echo ****** Style Check are Completed for ${COMPONENT} ******"
-    // We have used environment variable directly
-}
-
 def call() {
     pipeline{
         agent{
@@ -24,7 +14,7 @@ def call() {
                 steps {
                     script{
                         helloWorld.info(COMPONENT)
-                        lintChecks()
+                        common.lintChecks()
                     }
                 }
             }

@@ -49,7 +49,7 @@ def testCases() {
                 // sh "npm verify"
                 echo "****** Integration Testing is InProgress for ${COMPONENT} ******"
                 echo "****** Integration Testing is Completed for ${COMPONENT} ******"
-            }
+            },
             'Functional_Testing': {
                 echo "****** Functional Testing is Started for ${COMPONENT} ******"
                 // sh "npm function"

@@ -1,7 +1,7 @@
 def call(){
     node {
         git branch: 'main', url: "https://github.com/Adnan-110/${COMPONENT}.git"
-        tool name: 'maven-390', type: 'hudson.tasks.Maven_MavenInstallation'
+        tool name: 'maven-390', type: 'maven'
         // tool {
         //     name: 'Maven 3.9.0'
         //     type: 'hudson.tasks.Maven_MavenInstallation'

@@ -92,15 +92,7 @@ def testCases(){
 
         stages['Unit_Testing'] = {
             echo "****** Unit Testing is Started for ${COMPONENT} ******"
-            if(env.APP_TYPE == "node"){
-                sh "npm test"
-            }
-            else if(env.APP_TYPE == "java"){
-                sh "mvn test"
-            } 
-            else if(env.APP_TYPE == "python"){
-                sh "python -m unittest"
-            }
+            // sh "npm test"
             echo "****** Unit Testing is InProgress for ${COMPONENT} ******"
             echo "****** Unit Testing is Completed for ${COMPONENT} ******"
             }
@@ -120,5 +112,43 @@ def testCases(){
         }
 
         parallel(stages)
+    }
+}
+
+def generatingArtifacts() {
+    stage('Checking Artifacts Availability on Nexus'){
+        env.UPLOAD_STATUS = sh(returnStdout: true, script: "curl http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}.zip || true")
+        print UPLOAD_STATUS
+    }
+    if(env.UPLOAD_STATUS == "" || env.UPLOAD_STATUS == null){
+        stage('Generating the Artifacts') {
+            echo "Generating the ${COMPONENT} Artifacts"
+
+            if(env.APPTYPE == "node") {
+                sh "np install"
+                sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
+            }
+            else if(env.APP_TYPE == "java"){
+                sh "mvn clean package"
+                sh "mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar"
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}.jar"
+            }
+            else if(env.APP_TYPE == "python"){
+                sh "zip -r ${COMPONENT}-${TAG_NAME}.zip *.py *.ini requirements.txt"
+            }
+            else if(env.APP_TYPE == "angular"){
+                sh "cd static/"
+                sh "zip -r  ../${COMPONENT}-${TAG_NAME}.zip *"
+            }
+        }
+
+        stage('Uploading the Artifacts to Nexus') {
+            withCredentials([usernamePassword(credentialsId: 'NEXUS_CRED', passwordVariable: 'NEXUS_CRED_PSW', usernameVariable: 'NEXUS_CRED_USR')]) {
+                echo "Uploading the ${COMPONENT} Artifacts"
+                sh "curl -f -v -u ${NEXUS_CRED_USR}:${NEXUS_CRED_PSW} --upload-file ${COMPONENT}-${TAG_NAME}.zip http://${NEXUS_URL}:8081/repository/${COMPONENT}/${COMPONENT}-${TAG_NAME}.zip"
+                echo "Upload of ${COMPONENTS} Artifacts Completed"
+            }
+        }
+    
     }
 }

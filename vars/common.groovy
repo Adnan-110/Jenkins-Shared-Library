@@ -134,7 +134,9 @@ def generatingArtifacts() {
                 sh "zip -r ${COMPONENT}-${TAG_NAME}.zip ${COMPONENT}.jar"
             }
             else if(env.APP_TYPE == "python"){
+                sh "ls -ltr"
                 sh "zip -r ${COMPONENT}-${TAG_NAME}.zip *.py  *.ini requirements.txt"
+                sh "ls -ltr"
             }
             else if(env.APP_TYPE == "angular"){
                 sh "cd static/"

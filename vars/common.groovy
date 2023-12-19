@@ -35,7 +35,7 @@ def lintChecks() {
    
 }
 
-testCases() {
+def testCases() {
     stage('Testing') {
         parallel(
             'Unit_Testing': {
@@ -56,7 +56,6 @@ testCases() {
                 echo "****** Functional Testing is InProgress for ${COMPONENT} ******"
                 echo "****** Functional Testing is Completed for ${COMPONENT} ******"
             }
-
         )
     }
 }

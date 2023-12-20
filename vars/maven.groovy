@@ -6,7 +6,13 @@ def call(){
         //     name: 'Maven 3.9.0'
         //     type: 'hudson.tasks.Maven_MavenInstallation'
         // }
-        withMaven(maven: 'Maven 3.9.0') {
+        // withMaven(maven: 'Maven 3.9.0') {
+        //     // Your Maven build steps here
+        //     sh 'mvn clean install'
+        // }
+        def mvnHome = tool name: 'Maven 3.9.0', type: 'maven'
+        // Add the tool to the path so it can be used
+        withEnv(["PATH+MAVEN=${mvnHome}/bin"]) {
             // Your Maven build steps here
             sh 'mvn clean install'
         }

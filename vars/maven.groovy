@@ -10,7 +10,7 @@ def call(){
         //     // Your Maven build steps here
         //     sh 'mvn clean install'
         // }
-        def mvnHome = tool name: 'Maven 3.9.0', type: 'maven'
+        def mvnHome = tool name: 'maven-390', type: 'maven'
         // Add the tool to the path so it can be used
         withEnv(["PATH+MAVEN=${mvnHome}/bin"]) {
             // Your Maven build steps here

@@ -139,8 +139,11 @@ def generatingArtifacts() {
                 sh "ls -ltr"
             }
             else if(env.APP_TYPE == "angular"){
-                sh "cd static/"
-                sh "zip -r  ../${COMPONENT}-${TAG_NAME}.zip *"
+                sh '''
+                    cd static/
+                    zip -r  ../${COMPONENT}-${TAG_NAME}.zip *
+                    ls -lrth
+                '''
             }
         }
 

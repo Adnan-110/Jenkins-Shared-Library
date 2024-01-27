@@ -107,7 +107,7 @@ def call() {
                     sh '''
                         npm install 
                         ls -lrth
-                        zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js
+                        zip ${COMPONENT}-${TAG_NAME}.zip package.json node_modules/ server.js systemd.service
                         ls -lrth
                     '''
                     echo "****** Artifacts Preparation is Completed for ${COMPONENT} ******" 

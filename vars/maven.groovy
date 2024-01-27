@@ -17,7 +17,7 @@ def call(){
             sh 'mvn clean install'
         }
         env.SONAR_URL="172.31.39.131"
-        env.NEXUS_URL="172.31.86.85"
+        env.NEXUS_URL="172.31.15.124"
         env.APP_TYPE="java"
 
         common.lintChecks()
@@ -45,7 +45,7 @@ def call(){
 //             SONAR_CRED = credentials('SONAR_CRED')
 //             NEXUS_CRED = credentials('NEXUS_CRED')
 //             SONAR_URL="172.31.39.131"
-//             NEXUS_URL="172.31.86.85"
+//             NEXUS_URL="172.31.15.124"
 //         }
 //         stages{
 //             stage('Lint Checks') {

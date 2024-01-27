@@ -1,13 +1,14 @@
 def call() {
     properties([
         parameters{[
-            choice(choices: ['dev\nprod'], description: 'Select the Environment', name:"ENV"),
-            choice(choices: ['apply\destroy'], description: 'Select the Actionn to be Performed', name: "ACTION")
+            choice(choices: 'dev\nprod', description: 'Select the Environment', name:"ENV"),
+            choice(choices: 'apply\ndestroy', description: 'Select the Actionn to be Performed', name: "ACTION"),
+            string(choices: 'APP_VERSION', description: 'Enter the App Version', name:"APP_VERSION")
         ]}
     ])
     node{
         ansiColor('xterm') {
-            git branch: 'main', url: "https://github.com/Adnan-110/${REPONAME}.git"
+            git branch: 'main', url: "https://github.com/Adnan-110/${COMPONENT}.git"
             stage('Terraform Init') {
                 sh '''
                     cd mutable-infra
@@ -18,13 +19,13 @@ def call() {
             stage('Terraform Plan') {
                 sh '''
                     cd mutable-infra
-                    terraform plan -var-file=env-${ENV}/${ENV}.tfvars
+                    terraform plan -var-file=env-${ENV}/${ENV}.tfvars -var APP_VERSION=${APP_VERSION}
                 '''
             }
             stage('Terraform Action') {
                 sh '''
                     cd mutable-infra
-                    terraform ${ACTION} -auto-approve -var-file=env-${ENV}/${ENV}.tfvars
+                    terraform ${ACTION} -auto-approve -var-file=env-${ENV}/${ENV}.tfvars -var APP_VERSION=${APP_VERSION}
                 '''
             }
         }

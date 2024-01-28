@@ -17,9 +17,10 @@
 
 def call() {
         pipeline{
-            agent{
-                label 'ws'
-            }
+            agent any
+            // agent{
+            //     label 'ws'
+            // }
             environment{
                     SONAR_CRED = credentials('SONAR_CRED')
                     NEXUS_CRED = credentials('NEXUS_CRED')

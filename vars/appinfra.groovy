@@ -6,7 +6,7 @@ def call() {
             string(choices: 'APP_VERSION', description: 'Enter the App Version', name:"APP_VERSION")
         ]}
     ])
-    node('ws'){
+    node{
         ansiColor('xterm') {
             git branch: 'main', url: "https://github.com/Adnan-110/${COMPONENT}.git"
             stage('Terraform Init') {

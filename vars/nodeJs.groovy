@@ -1,5 +1,5 @@
 def call(){
-    node('ws') {
+    node {
         git branch: 'main', url: "https://github.com/Adnan-110/${COMPONENT}.git"
         env.SONAR_URL="172.31.39.131"
         env.NEXUS_URL="172.31.15.124"

@@ -1,36 +1,72 @@
-def call() {
+// def call() {
+//     properties([
+//         parameters{[
+//             choice(choices: 'dev\nprod', description: 'Select the Environment', name:"ENV"),
+//             choice(choices: 'apply\ndestroy', description: 'Select the Action to be Performed', name: "ACTION"),
+//             string(choices: 'APP_VERSION', description: 'Enter the App Version', name:"APP_VERSION")
+//         ]}
+//     ])
+//     node{
+//         ansiColor('xterm') {
+//             git branch: 'main', url: "https://github.com/Adnan-110/${COMPONENT}.git"
+//             stage('Terraform Init') {
+//                 sh '''
+//                     cd mutable-infra
+//                     terrafile -f env-dev/Terrafile
+//                     terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars
+//                 '''
+//             }
+//             stage('Terraform Plan') {
+//                 sh '''
+//                     cd mutable-infra
+//                     terraform plan -var-file=env-${ENV}/${ENV}.tfvars -var APP_VERSION=${APP_VERSION}
+//                 '''
+//             }
+//             stage('Terraform Action') {
+//                 sh '''
+//                     cd mutable-infra
+//                     terraform ${ACTION} -auto-approve -var-file=env-${ENV}/${ENV}.tfvars -var APP_VERSION=${APP_VERSION}
+//                 '''
+//             }
+//         }
+//     }
+
+// }
+
+
+def call(){
     properties([
-        parameters{[
-            choice(choices: 'dev\nprod', description: 'Select the Environment', name:"ENV"),
+        parameters([
+            choice(choices: 'dev\nprod', description: 'Select the Environment', name: "ENV"),
             choice(choices: 'apply\ndestroy', description: 'Select the Action to be Performed', name: "ACTION"),
-            string(choices: 'APP_VERSION', description: 'Enter the App Version', name:"APP_VERSION")
-        ]}
+            string(choices: 'APP_VERSION', description: 'Enter the App Version', name: "APP_VERSION"),
+        ]),
     ])
     node{
-        ansiColor('xterm') {
+        ansiColor('xterm'){
             git branch: 'main', url: "https://github.com/Adnan-110/${COMPONENT}.git"
-            stage('Terraform Init') {
+            stage('Terraform Init'){
                 sh '''
                     cd mutable-infra
                     terrafile -f env-dev/Terrafile
-                    terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars
+                    terraform init -backend-config=env-${ENV}/${ENV}-backend.tfvars 
                 '''
             }
-            stage('Terraform Plan') {
+            stage('Terraform Plan'){
                 sh '''
                     cd mutable-infra
                     terraform plan -var-file=env-${ENV}/${ENV}.tfvars -var APP_VERSION=${APP_VERSION}
                 '''
             }
-            stage('Terraform Action') {
+            stage('Terraform Action'){
                 sh '''
                     cd mutable-infra
                     terraform ${ACTION} -auto-approve -var-file=env-${ENV}/${ENV}.tfvars -var APP_VERSION=${APP_VERSION}
                 '''
             }
+            
         }
     }
-
 }
 
 // pipeline{

@@ -2,11 +2,11 @@ def call() {
     properties([
         parameters{[
             choice(choices: 'dev\nprod', description: 'Select the Environment', name:"ENV"),
-            choice(choices: 'apply\ndestroy', description: 'Select the Actionn to be Performed', name: "ACTION"),
+            choice(choices: 'apply\ndestroy', description: 'Select the Action to be Performed', name: "ACTION"),
             string(choices: 'APP_VERSION', description: 'Enter the App Version', name:"APP_VERSION")
         ]}
     ])
-    node{
+    node('ws'){
         ansiColor('xterm') {
             git branch: 'main', url: "https://github.com/Adnan-110/${COMPONENT}.git"
             stage('Terraform Init') {

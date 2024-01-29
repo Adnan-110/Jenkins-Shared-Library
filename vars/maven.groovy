@@ -1,5 +1,5 @@
 def call(){
-    node {
+    node('ws') {
         git branch: 'main', url: "https://github.com/Adnan-110/${COMPONENT}.git"
         // tool name: 'maven-390', type: 'maven'
         // tool {

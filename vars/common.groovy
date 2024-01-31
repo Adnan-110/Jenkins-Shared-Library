@@ -126,7 +126,7 @@ def generatingArtifacts() {
 
             if(env.APP_TYPE == "node") {
                 sh "npm install"
-                sh "zip ${COMPONENT}-${TAG_NAME}.zip node_modules server.js"
+                sh "zip ${COMPONENT}-${TAG_NAME}.zip package.json node_modules/ server.js systemd.service"
             }
             else if(env.APP_TYPE == "java"){
                 sh "mvn clean package"

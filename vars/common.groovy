@@ -118,7 +118,7 @@ def testCases(){
 def generatingArtifacts() {
     stage('Checking Artifacts Availability on Nexus'){
         env.UPLOAD_STATUS = sh(returnStdout: true, script: "curl http://${NEXUS_URL}:8081/service/rest/repository/browse/${COMPONENT}/ | grep ${COMPONENT}-${TAG_NAME}.zip || true")
-        print UPLOAD_STATUS
+        print UPLOAD_STATUS || true
     }
     if(env.UPLOAD_STATUS == "" || env.UPLOAD_STATUS == null){
         stage('Generating the Artifacts') {
